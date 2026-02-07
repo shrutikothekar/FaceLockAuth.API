@@ -14,15 +14,19 @@ namespace FaceLockAuth.API.Controllers
         private readonly AppDbContext _context;
         private readonly IFaceStorageService _faceStorageService;
         private readonly IFaceAuthService _faceAuthService;
+        private readonly IJwtTokenService _jwtTokenService;
+
 
         public AuthController(
             AppDbContext context,
             IFaceStorageService faceStorageService,
-            IFaceAuthService faceAuthService)
+            IFaceAuthService faceAuthService,
+            IJwtTokenService jwtTokenService)
         {
             _context = context;
             _faceStorageService = faceStorageService;
             _faceAuthService = faceAuthService;
+            _jwtTokenService = jwtTokenService;
         }
 
         [HttpPost("register")]
@@ -60,7 +64,14 @@ namespace FaceLockAuth.API.Controllers
             if (!isFaceValid)
                 return Unauthorized("Face verification failed");
 
-            return Ok(new { message = "Face login successful" });
+            var token = _jwtTokenService.GenerateToken(user);
+
+            return Ok(new
+            {
+                message = "Face login successful",
+                token
+            });
+            //return Ok(new { message = "Face login successful" });
         }
     }
 
