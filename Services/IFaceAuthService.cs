@@ -2,6 +2,6 @@
 {
     public interface IFaceAuthService
     {
-        Task<bool> VerifyFaceAsync(string storedImagePath, IFormFile uploadedImage);
+        Task<bool> VerifyFaceAsync(string storedImagePath, string uploadedImage);
     }
 }

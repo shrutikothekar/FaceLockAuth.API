@@ -12,6 +12,7 @@ namespace FaceLockAuth.API.DTOs
 
         // Face image uploaded from frontend
         [Required]
-        public IFormFile FaceImage { get; set; }
+        public string Base64Image { get; set; }
+
     }
 }

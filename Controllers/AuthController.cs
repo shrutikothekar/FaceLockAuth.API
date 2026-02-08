@@ -32,7 +32,8 @@ namespace FaceLockAuth.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] RegisterFaceRequest request)
         {
-            var imagePath = await _faceStorageService.SaveFaceImageAsync(request.FaceImage);
+            var imagePath =
+        await _faceStorageService.SaveBase64ImageAsync(request.Base64Image);
 
             var user = new User
             {
@@ -52,14 +53,14 @@ namespace FaceLockAuth.API.Controllers
         public async Task<IActionResult> FaceLogin([FromForm] FaceLoginRequest request)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == request.Email);
+       .FirstOrDefaultAsync(u => u.Email == request.Email);
 
             if (user == null)
                 return Unauthorized("User not found");
 
             var isFaceValid = await _faceAuthService.VerifyFaceAsync(
                 user.FaceImagePath,
-                request.FaceImage);
+                request.Base64Image);
 
             if (!isFaceValid)
                 return Unauthorized("Face verification failed");
@@ -71,7 +72,6 @@ namespace FaceLockAuth.API.Controllers
                 message = "Face login successful",
                 token
             });
-            //return Ok(new { message = "Face login successful" });
         }
     }
 

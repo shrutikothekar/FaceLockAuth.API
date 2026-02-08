@@ -2,7 +2,7 @@
 {
     public class FaceAuthService : IFaceAuthService
     {
-        public async Task<bool> VerifyFaceAsync(string storedImagePath, IFormFile uploadedImage)
+        public async Task<bool> VerifyFaceAsync(string storedImagePath, string uploadedImage)
         {
             // v1 logic:
             // 1. Check stored image exists

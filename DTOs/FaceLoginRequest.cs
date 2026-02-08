@@ -7,6 +7,7 @@ namespace FaceLockAuth.API.DTOs
         [Required, EmailAddress]
         public string Email { get; set; }
         [Required]
-        public IFormFile FaceImage { get; set; }
+        public string Base64Image { get; set; }
+
     }
 }

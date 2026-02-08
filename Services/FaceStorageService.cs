@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace FaceLockAuth.API.Services
+﻿namespace FaceLockAuth.API.Services
 {
     public class FaceStorageService : IFaceStorageService
     {
         private readonly string _faceImageFolder = "FaceImages";
 
-        public async Task<string> SaveFaceImageAsync(IFormFile faceImage)
+        public async Task<string> SaveBase64ImageAsync(string base64Image)
         {
             if (!Directory.Exists(_faceImageFolder))
                 Directory.CreateDirectory(_faceImageFolder);
 
-            var fileName = $"{Guid.NewGuid()}_{faceImage.FileName}";
+            var imageBytes = Convert.FromBase64String(
+                base64Image.Split(',')[1]);
+
+            var fileName = $"{Guid.NewGuid()}.jpg";
             var filePath = Path.Combine(_faceImageFolder, fileName);
 
-            using var stream = new FileStream(filePath, FileMode.Create);
-            await faceImage.CopyToAsync(stream);
-
+            await File.WriteAllBytesAsync(filePath, imageBytes);
             return filePath; // store ONLY path in DB
         }
     }
