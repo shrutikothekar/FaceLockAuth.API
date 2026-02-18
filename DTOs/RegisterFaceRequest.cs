@@ -10,9 +10,8 @@ namespace FaceLockAuth.API.DTOs
         [Required, EmailAddress]
         public string Email { get; set; }
 
-        // Face image uploaded from frontend
+        // 128-d face descriptor from face-api.js
         [Required]
-        public string Base64Image { get; set; }
-
+        public float[] FaceDescriptor { get; set; }
     }
 }

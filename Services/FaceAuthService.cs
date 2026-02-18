@@ -2,21 +2,36 @@
 {
     public class FaceAuthService : IFaceAuthService
     {
-        public async Task<bool> VerifyFaceAsync(string storedImagePath, string uploadedImage)
+        //public async Task<bool> VerifyFaceAsync(string storedImagePath, string uploadedImage)
+        //{
+        //    if (!File.Exists(storedImagePath))
+        //        return false;
+
+        //    if (uploadedImage == null || uploadedImage.Length == 0)
+        //        return false;
+
+        //    return true;
+        //}
+        public Task<bool> VerifyFaceAsync(float[] storedDescriptor, float[] incomingDescriptor)
         {
-            // v1 logic:
-            // 1. Check stored image exists
-            // 2. Check uploaded image exists
-            // 3. Accept as valid (placeholder)
+            if (storedDescriptor == null || incomingDescriptor == null)
+                return Task.FromResult(false);
 
-            if (!File.Exists(storedImagePath))
-                return false;
+            if (storedDescriptor.Length != incomingDescriptor.Length)
+                return Task.FromResult(false);
 
-            if (uploadedImage == null || uploadedImage.Length == 0)
-                return false;
+            double distance = 0;
 
-            // v1 assumption: email + face upload is enough
-            return true;
+            for (int i = 0; i < storedDescriptor.Length; i++)
+            {
+                distance += Math.Pow(storedDescriptor[i] - incomingDescriptor[i], 2);
+            }
+
+            distance = Math.Sqrt(distance);
+
+            return Task.FromResult(distance < 0.6);
         }
+
+
     }
 }

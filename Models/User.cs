@@ -9,7 +9,9 @@
         public string Email { get; set; }
 
         // This will store the face image file name or path
-        public string FaceImagePath { get; set; }
+        //public string FaceImagePath { get; set; }
+        public float[] FaceDescriptor { get; set; }  // ✅ MUST BE float[]
+
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

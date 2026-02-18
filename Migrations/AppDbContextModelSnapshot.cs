@@ -37,7 +37,7 @@ namespace FaceLockAuth.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FaceImagePath")
+                    b.Property<string>("FaceDescriptor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

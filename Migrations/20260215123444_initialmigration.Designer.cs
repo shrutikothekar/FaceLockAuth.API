@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FaceLockAuth.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260207100303_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260215123444_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace FaceLockAuth.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FaceImagePath")
+                    b.Property<string>("FaceDescriptor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
